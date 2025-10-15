@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Template personalizado para facturas Ionice -->
+    <template id="report_invoice_document_ionice" inherit_id="account.report_invoice_document">
+
+        <!-- Ocultar columna de impuestos en facturas -->
+        <xpath expr="//th[@name='th_taxes']" position="attributes">
+            <attribute name="style">display: none;</attribute>
+        </xpath>
+
+        <xpath expr="//td[@name='td_taxes']" position="attributes">
+            <attribute name="style">display: none;</attribute>
+        </xpath>
+
+        <!-- Cambiar el texto de la columna de precio unitario por 'Precio' y centrarla -->
+        <xpath expr="//table[contains(@class, 'o_main_table')]/thead/tr/th[3]" position="replace">
+            <th class="text-end">Precio</th>
+        </xpath>
+
+        <!-- Personalizar totales -->
+        <xpath expr="//div[@id='total']" position="attributes">
+            <attribute name="style">background-color: #ecf0f1; padding: 15px; border-radius: 5px;</attribute>
+        </xpath>
+
+        <!-- Eliminar cualquier fila que contenga la palabra Subtotal -->
+        <xpath expr="//tr[td[contains(., 'Subtotal')]]" position="replace"/>
+    </template>
+
+    <!-- Estilos CSS personalizados -->
+    <template id="ionice_report_invoice_styles" inherit_id="web.report_layout">
+        <xpath expr="//head" position="inside">
+            <style>
+                /* Estilos personalizados para facturas Ionice */
+                .o_report_layout_standard .page {
+                    padding: 20px;
+                }
+
+                h2 {
+                    color: #2c3e50;
+                    border-bottom: 3px solid #3498db;
+                    padding-bottom: 10px;
+                }
+
+                table thead th {
+                    background-color: #3498db !important;
+                    color: white !important;
+                    font-weight: bold;
+                }
+
+                table tbody tr:nth-child(even) {
+                    background-color: #f8f9fa;
+                }
+                #total {
+                    background-color: #ecf0f1;
+                    padding: 15px;
+                    border-radius: 5px;
+                }
+            </style>
+        </xpath>
+    </template>
+</odoo>

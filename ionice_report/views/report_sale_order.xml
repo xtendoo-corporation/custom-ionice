@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Template personalizado para presupuestos/pedidos de venta Ionice -->
+    <template id="report_saleorder_document_ionice" inherit_id="sale.report_saleorder_document">
+        <!-- Eliminar la primera fila del encabezado (donde aparece el cliente) -->
+        <xpath expr="//div[@class='page']/div[1]" position="replace"/>
+
+        <!-- Eliminar columna de impuestos en la tabla -->
+        <xpath expr="//th[@name='th_taxes']" position="attributes">
+            <attribute name="style">display: none;</attribute>
+        </xpath>
+        <xpath expr="//td[@name='td_taxes']" position="attributes">
+            <attribute name="style">display: none;</attribute>
+        </xpath>
+
+        <!-- Ocultar el subtotal que aparece justo arriba de la parte final del pago -->
+        <xpath expr="//td[@name='td_section_subtotal']" position="attributes">
+            <attribute name="style">display: none !important;</attribute>
+        </xpath>
+        <xpath expr="//tr[contains(@class, 'is-subtotal')]" position="attributes">
+            <attribute name="style">display: none !important;</attribute>
+        </xpath>
+
+        <!-- Mostrar solo el número en la columna de cantidad, alineado al centro -->
+        <xpath expr="//td[@name='td_quantity']" position="replace">
+            <td name="td_quantity" class="text-center">
+                <span t-field="line.product_uom_qty"/>
+            </td>
+        </xpath>
+
+        <!-- Separación visual entre la tabla de productos y la sección de pago -->
+        <xpath expr="//table[contains(@class, 'o_main_table')]" position="attributes">
+            <attribute name="style">margin-bottom: 60px;</attribute>
+        </xpath>
+
+        <!-- Cambiar 'Salesperson' por 'Vendedor' en el reporte -->
+        <xpath expr="//strong[contains(text(),'Salesperson')]" position="replace">
+            <strong>Vendedor</strong>
+        </xpath>
+
+        <!-- Cambiar 'Expiration' por 'Fecha expiración' en el reporte -->
+        <xpath expr="//strong[contains(text(),'Expiration')]" position="replace">
+            <strong>Fecha expiración</strong>
+        </xpath>
+
+        <!-- Cambiar el texto de la columna de precio unitario por 'Precio' y centrarla -->
+        <xpath expr="//table[contains(@class, 'o_main_table')]/thead/tr/th[3]" position="replace">
+            <th class="text-center">Precio</th>
+        </xpath>
+    </template>
+</odoo>
