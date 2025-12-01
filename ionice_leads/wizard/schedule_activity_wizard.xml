@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Vista del formulario del wizard -->
+    <record id="view_schedule_activity_wizard_form" model="ir.ui.view">
+        <field name="name">schedule.activity.wizard.form</field>
+        <field name="model">schedule.activity.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Programar Actividades">
+                <div class="alert alert-info" role="alert">
+                    <strong>Programar actividad para <field name="lead_count" readonly="1"/> lead(s) seleccionado(s)</strong>
+                </div>
+                <group>
+                    <field name="lead_ids" widget="many2many_tags" readonly="1"/>
+                </group>
+                <group>
+                    <group>
+                        <field name="activity_type_id" options="{'no_create': True, 'no_open': True}"/>
+                        <field name="summary" placeholder="ej. Llamar al cliente"/>
+                        <field name="date_deadline"/>
+                    </group>
+                    <group>
+                        <field name="user_id" options="{'no_create': True, 'no_open': True}"/>
+                    </group>
+                </group>
+                <group>
+                    <field name="note" placeholder="Agregar notas adicionales..."/>
+                </group>
+                <footer>
+                    <button string="Programar Actividades" type="object" name="action_schedule_activities" class="btn-primary"/>
+                    <button string="Cancelar" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <!-- Acción para abrir el wizard desde leads -->
+    <record id="action_schedule_activity_wizard" model="ir.actions.act_window">
+        <field name="name">Programar Actividades</field>
+        <field name="res_model">schedule.activity.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="binding_model_id" ref="crm.model_crm_lead"/>
+        <field name="binding_view_types">list</field>
+    </record>
+</odoo>
+
